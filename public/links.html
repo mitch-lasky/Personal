@@ -85,5 +85,57 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Load links dynamically from the API
+        document.addEventListener('DOMContentLoaded', async function() {
+            const linksContainer = document.getElementById('links-content');
+            if (!linksContainer) return;
+            
+            try {
+                const response = await fetch('/api/links');
+                const links = await response.json();
+                
+                if (links && links.length > 0) {
+                    linksContainer.innerHTML = '';
+                    
+                    links.forEach(link => {
+                        const linkElement = document.createElement('a');
+                        linkElement.href = link.url;
+                        linkElement.target = '_blank';
+                        linkElement.rel = 'noopener noreferrer';
+                        linkElement.className = 'link-item';
+                        
+                        // Extract domain for display
+                        let displayUrl = link.url;
+                        try {
+                            const urlObj = new URL(link.url);
+                            displayUrl = urlObj.hostname.replace('www.', '');
+                        } catch (e) {}
+                        
+                        linkElement.innerHTML = `
+                            <div class="link-icon">${link.icon || '🔗'}</div>
+                            <div class="link-content">
+                                <h3>${escapeHtml(link.title)}</h3>
+                                <p>${escapeHtml(link.description || '')}</p>
+                                <span class="link-url">${escapeHtml(displayUrl)}</span>
+                            </div>
+                            <span class="link-arrow">→</span>
+                        `;
+                        
+                        linksContainer.appendChild(linkElement);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading links:', error);
+                // Keep existing content on error
+            }
+        });
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
 </body>
 </html>

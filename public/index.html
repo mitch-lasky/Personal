@@ -54,5 +54,20 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Load about text dynamically from the API
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const response = await fetch('/api/about');
+                const data = await response.json();
+                if (data.text) {
+                    document.getElementById('about-text').innerHTML = data.text;
+                }
+            } catch (error) {
+                console.error('Error loading about text:', error);
+                // Keep existing content on error
+            }
+        });
+    </script>
 </body>
 </html>

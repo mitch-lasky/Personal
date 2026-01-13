@@ -127,11 +127,13 @@ const upload = multer({
     storage: storage,
     limits: { fileSize: 500 * 1024 * 1024 }, // 500MB limit
     fileFilter: (req, file, cb) => {
-        const allowedTypes = /mp3|mp4|mov/;
-        const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-        const mimetype = allowedTypes.test(file.mimetype);
+        const allowedExtensions = /\.(mp3|mp4|mov)$/i;
+        const allowedMimeTypes = /^(audio\/mpeg|audio\/mp3|video\/mp4|video\/quicktime)$/;
         
-        if (extname && mimetype) {
+        const extname = allowedExtensions.test(file.originalname);
+        const mimetype = allowedMimeTypes.test(file.mimetype);
+        
+        if (extname || mimetype) {
             return cb(null, true);
         } else {
             cb(new Error('Only MP3, MP4, and MOV files are allowed'));
@@ -212,6 +214,10 @@ app.get('/api/media', (req, res) => {
 });
 
 app.post('/api/media', authenticateToken, upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded or invalid file type' });
+    }
+    
     const { title, description, date } = req.body;
     const filename = req.file.filename;
 
