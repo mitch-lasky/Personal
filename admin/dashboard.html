@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Mitch Lasky</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">Mitch Lasky - Admin</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">View Site</a></li>
+                <li><a href="#" class="nav-link" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content admin-container">
+        <div id="success-message" class="success-message" style="display: none;"></div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <!-- About Text Section -->
+        <div class="admin-section">
+            <h2>About Page Content</h2>
+            <form id="about-form">
+                <div class="form-group">
+                    <label for="about-text">Introductory Text</label>
+                    <textarea id="about-text" name="about-text" placeholder="Enter your about text here..."></textarea>
+                </div>
+                <button type="submit" class="btn">Update About Text</button>
+            </form>
+        </div>
+
+        <!-- Media Upload Section -->
+        <div class="admin-section">
+            <h2>Talking Page - Media Content</h2>
+            <form id="media-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="media-title">Title</label>
+                    <input type="text" id="media-title" name="media-title" placeholder="Episode or interview title" required>
+                </div>
+                <div class="form-group">
+                    <label for="media-description">Description</label>
+                    <textarea id="media-description" name="media-description" placeholder="Describe this content..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="media-date">Date</label>
+                    <input type="date" id="media-date" name="media-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="media-file">Media File (MP3, MP4, or MOV)</label>
+                    <input type="file" id="media-file" name="media-file" accept=".mp3,.mp4,.mov" required>
+                </div>
+                <button type="submit" class="btn">Upload Media</button>
+            </form>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Existing Media</h3>
+            <ul id="media-list" class="media-list">
+                <!-- Media items will be loaded here -->
+            </ul>
+        </div>
+
+        <!-- Links Section -->
+        <div class="admin-section">
+            <h2>Links Page</h2>
+            <form id="links-form">
+                <div class="form-group">
+                    <label for="link-title">Link Title</label>
+                    <input type="text" id="link-title" name="link-title" placeholder="e.g., Podcast" required>
+                </div>
+                <div class="form-group">
+                    <label for="link-description">Description</label>
+                    <input type="text" id="link-description" name="link-description" placeholder="Brief description">
+                </div>
+                <div class="form-group">
+                    <label for="link-url">URL</label>
+                    <input type="url" id="link-url" name="link-url" placeholder="https://example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="link-icon">Icon (emoji)</label>
+                    <input type="text" id="link-icon" name="link-icon" placeholder="🎙️" maxlength="2">
+                </div>
+                <button type="submit" class="btn">Add Link</button>
+            </form>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Existing Links</h3>
+            <ul id="links-list" class="links-list">
+                <!-- Links will be loaded here -->
+            </ul>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Mitch Lasky. All rights reserved.</p>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
