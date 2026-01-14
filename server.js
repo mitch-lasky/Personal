@@ -125,7 +125,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 500 * 1024 * 1024 }, // 500MB limit
+    limits: { fileSize: 2 * 1024 * 1024 * 1024 }, // 2GB limit
     fileFilter: (req, file, cb) => {
         const allowedExtensions = /\.(mp3|mp4|mov)$/i;
         const allowedMimeTypes = /^(audio\/mpeg|audio\/mp3|video\/mp4|video\/quicktime)$/;
@@ -205,7 +205,7 @@ app.put('/api/about', authenticateToken, (req, res) => {
 
 // Media
 app.get('/api/media', (req, res) => {
-    db.all('SELECT * FROM media ORDER BY date DESC', (err, rows) => {
+    db.all('SELECT * FROM media ORDER BY date DESC, created_at DESC', (err, rows) => {
         if (err) {
             return res.status(500).json({ error: 'Database error' });
         }

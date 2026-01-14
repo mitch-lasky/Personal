@@ -7,9 +7,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
         // Fetch media items from the API
         const response = await fetch('/api/media');
-        const mediaItems = await response.json();
+        let mediaItems = await response.json();
         
         if (mediaItems && mediaItems.length > 0) {
+            // Sort by date descending (newest first)
+            mediaItems.sort((a, b) => {
+                const dateA = a.date ? new Date(a.date) : new Date(0);
+                const dateB = b.date ? new Date(b.date) : new Date(0);
+                return dateB - dateA;
+            });
+            
             // Clear placeholder content
             mediaGrid.innerHTML = '';
             

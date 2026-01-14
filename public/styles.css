@@ -160,6 +160,12 @@ h3 {
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 20px var(--shadow-light);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.hero-image img:last-child {
+    margin-bottom: 0;
 }
 
 .hero-image img:hover {
